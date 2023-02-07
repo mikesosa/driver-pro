@@ -9,7 +9,9 @@ import {
   XMarkIcon,
 } from '@heroicons/react/20/solid';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import * as React from 'react';
+import { useEffect } from 'react';
 
 import classNames from '@/lib/classNames';
 
@@ -21,13 +23,30 @@ const navigation = [
   { name: 'Recent', href: '#', icon: ClockIcon, current: false },
 ];
 const teams = [
-  { name: 'Engineering', href: '#', bgColorClass: 'bg-indigo-500' },
+  { name: 'Engineering', href: '#', bgColorClass: 'bg-violet-500' },
   { name: 'Human Resources', href: '#', bgColorClass: 'bg-green-500' },
   { name: 'Customer Success', href: '#', bgColorClass: 'bg-yellow-500' },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const { data: session, status } = useSession();
+  const loading = status === 'loading';
+
+  useEffect(() => {
+    if (!loading && !session) {
+      window.location.href = '/auth/signin';
+    }
+  }, [loading, session]);
+
+  // When rendering client side don't display anything until loading is complete
+  // if (typeof window === 'undefined' && loading) return <p>asdas</p>;
+
+  // // If no session exists, display access denied message
+  // if (!session) {
+  //   window.location.href = '/auth/signin';
+  //   return null;
+  // }
 
   // Put Header or Footer Here
   return (
@@ -320,7 +339,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 type='text'
                 name='search'
                 id='search'
-                className='block w-full rounded-md border-gray-300 pl-9 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                className='block w-full rounded-md border-gray-300 pl-9 focus:border-violet-500 focus:ring-violet-500 sm:text-sm'
                 placeholder='Search'
               />
             </div>

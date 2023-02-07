@@ -1,56 +1,48 @@
-import { Menu, Transition } from '@headlessui/react';
-import {
-  ChevronRightIcon,
-  EllipsisVerticalIcon,
-} from '@heroicons/react/20/solid';
 import * as React from 'react';
-import { Fragment } from 'react';
-
-import classNames from '@/lib/classNames';
 
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 
-const projects = [
-  {
-    id: 1,
-    title: 'GraphQL API',
-    initials: 'GA',
-    team: 'Engineering',
-    members: [
-      {
-        name: 'Dries Vincent',
-        handle: 'driesvincent',
-        imageUrl:
-          'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Lindsay Walton',
-        handle: 'lindsaywalton',
-        imageUrl:
-          'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Courtney Henry',
-        handle: 'courtneyhenry',
-        imageUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Tom Cook',
-        handle: 'tomcook',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalMembers: 12,
-    lastUpdated: 'March 17, 2020',
-    pinned: true,
-    bgColorClass: 'bg-pink-600',
-  },
-  // More projects...
-];
-const pinnedProjects = projects.filter((project) => project.pinned);
+// const projects = [
+//   {
+//     id: 1,
+//     title: 'GraphQL API',
+//     initials: 'GA',
+//     team: 'Engineering',
+//     members: [
+//       {
+//         name: 'Dries Vincent',
+//         handle: 'driesvincent',
+//         imageUrl:
+//           'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//       },
+//       {
+//         name: 'Lindsay Walton',
+//         handle: 'lindsaywalton',
+//         imageUrl:
+//           'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//       },
+//       {
+//         name: 'Courtney Henry',
+//         handle: 'courtneyhenry',
+//         imageUrl:
+//           'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//       },
+//       {
+//         name: 'Tom Cook',
+//         handle: 'tomcook',
+//         imageUrl:
+//           'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//       },
+//     ],
+//     totalMembers: 12,
+//     lastUpdated: 'March 17, 2020',
+//     pinned: true,
+//     bgColorClass: 'bg-pink-600',
+//   },
+//   // More projects...
+// ];
+// const pinnedProjects = projects.filter((project) => project.pinned);
 
 /**
  * SVGR Support
@@ -72,7 +64,7 @@ export default function HomePage() {
 
       <main className='flex-1'>
         {/* Page title & actions */}
-        <div className='border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8'>
+        {/* <div className='border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8'>
           <div className='min-w-0 flex-1'>
             <h1 className='text-lg font-medium leading-6 text-gray-900 sm:truncate'>
               Home
@@ -92,9 +84,9 @@ export default function HomePage() {
               Create
             </button>
           </div>
-        </div>
+        </div> */}
         {/* Pinned projects */}
-        <div className='mt-6 px-4 sm:px-6 lg:px-8'>
+        {/* <div className='mt-6 px-4 sm:px-6 lg:px-8'>
           <h2 className='text-sm font-medium text-gray-900'>Pinned Projects</h2>
           <ul
             role='list'
@@ -199,10 +191,10 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         {/* Projects list (only on smallest breakpoint) */}
-        <div className='mt-10 sm:hidden'>
+        {/* <div className='mt-10 sm:hidden'>
           <div className='px-4 sm:px-6'>
             <h2 className='text-sm font-medium text-gray-900'>Projects</h2>
           </div>
@@ -239,10 +231,10 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         {/* Projects table (small breakpoint and up) */}
-        <div className='mt-8 hidden sm:block'>
+        {/* <div className='mt-8 hidden sm:block'>
           <div className='inline-block min-w-full border-b border-gray-200 align-middle'>
             <table className='min-w-full'>
               <thead>
@@ -296,15 +288,16 @@ export default function HomePage() {
                     <td className='px-6 py-3 text-sm font-medium text-gray-500'>
                       <div className='flex items-center space-x-2'>
                         <div className='flex flex-shrink-0 -space-x-1'>
-                          {/* {project.members.map((member) => (
+                          {project.members.map((member) => (
                             <Image
                               key={member.handle}
-                              fill
+                              width={24}
+                              height={24}
                               className='h-6 w-6 max-w-none rounded-full ring-2 ring-white'
                               src={member.imageUrl}
                               alt={member.name}
                             />
-                          ))} */}
+                          ))}
                         </div>
                         {project.totalMembers > project.members.length ? (
                           <span className='flex-shrink-0 text-xs font-medium leading-5'>
@@ -319,7 +312,7 @@ export default function HomePage() {
                     <td className='whitespace-nowrap px-6 py-3 text-right text-sm font-medium'>
                       <a
                         href='#'
-                        className='text-indigo-600 hover:text-indigo-900'
+                        className='text-violet-600 hover:text-violet-900'
                       >
                         Edit
                       </a>
@@ -329,7 +322,7 @@ export default function HomePage() {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
       </main>
     </Layout>
   );
