@@ -3,7 +3,6 @@ import {
   ChevronRightIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/20/solid';
-import Image from 'next/image';
 import * as React from 'react';
 import { Fragment } from 'react';
 
@@ -297,14 +296,15 @@ export default function HomePage() {
                     <td className='px-6 py-3 text-sm font-medium text-gray-500'>
                       <div className='flex items-center space-x-2'>
                         <div className='flex flex-shrink-0 -space-x-1'>
-                          {project.members.map((member) => (
+                          {/* {project.members.map((member) => (
                             <Image
                               key={member.handle}
+                              fill
                               className='h-6 w-6 max-w-none rounded-full ring-2 ring-white'
                               src={member.imageUrl}
                               alt={member.name}
                             />
-                          ))}
+                          ))} */}
                         </div>
                         {project.totalMembers > project.members.length ? (
                           <span className='flex-shrink-0 text-xs font-medium leading-5'>

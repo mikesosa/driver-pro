@@ -13,6 +13,8 @@ import * as React from 'react';
 
 import classNames from '@/lib/classNames';
 
+import Logo from '~/svg/logo.svg';
+
 const navigation = [
   { name: 'Home', href: '#', icon: HomeIcon, current: true },
   { name: 'My tasks', href: '#', icon: Bars4Icon, current: false },
@@ -83,11 +85,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </div>
                 </Transition.Child>
                 <div className='flex flex-shrink-0 items-center px-4'>
-                  <Image
-                    className='h-8 w-auto'
-                    src='https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500'
-                    alt='Your Company'
-                  />
+                  <Logo className='text-5xl' />
                 </div>
                 <div className='mt-5 h-0 flex-1 overflow-y-auto'>
                   <nav className='px-2'>
@@ -161,11 +159,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Static sidebar for desktop */}
       <div className='hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pt-5 lg:pb-4'>
         <div className='flex flex-shrink-0 items-center px-6'>
-          <Image
-            className='h-8 w-auto'
-            src='https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500'
-            alt='Your Company'
-          />
+          <Logo className='text-5xl' />
         </div>
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className='mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1'>
@@ -176,6 +170,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <span className='flex w-full items-center justify-between'>
                   <span className='flex min-w-0 items-center justify-between space-x-3'>
                     <Image
+                      width={32}
+                      height={32}
                       className='h-10 w-10 flex-shrink-0 rounded-full bg-gray-300'
                       src='https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80'
                       alt=''
@@ -432,6 +428,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Menu.Button className='flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2'>
                     <span className='sr-only'>Open user menu</span>
                     <Image
+                      width={32}
+                      height={32}
                       className='h-8 w-8 rounded-full'
                       src='https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
                       alt=''
