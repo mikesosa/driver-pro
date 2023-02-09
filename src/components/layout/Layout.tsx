@@ -9,7 +9,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/20/solid';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import * as React from 'react';
 import { useEffect } from 'react';
 
@@ -35,7 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!loading && !session) {
-      window.location.href = '/auth/signin';
+      window.location.href = '/auth/sign-in';
     }
   }, [loading, session]);
 
@@ -304,12 +304,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        href='#'
+                        role='button'
+                        onClick={() =>
+                          signOut({ callbackUrl: '/auth/sign-in' })
+                        }
                         className={classNames(
                           active
                             ? 'bg-gray-100 text-gray-900'
                             : 'text-gray-700',
-                          'block px-4 py-2 text-sm'
+                          'block cursor-pointer px-4 py-2 text-sm'
                         )}
                       >
                         Logout
@@ -548,7 +551,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href='#'
+                            role='button'
+                            onClick={() =>
+                              signOut({ callbackUrl: '/auth/sign-in' })
+                            }
                             className={classNames(
                               active
                                 ? 'bg-gray-100 text-gray-900'

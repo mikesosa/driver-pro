@@ -1,18 +1,15 @@
 // import logo from '@assets/logo.svg';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { getCsrfToken, signIn } from 'next-auth/react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { getCsrfToken } from 'next-auth/react';
 
+import strapiClient from '@/lib/clients/strapiClient';
 import { BUSINESS_NAME } from '@/lib/constants';
+import useFormSchema from '@/lib/hooks/useFormSchema';
 import useToast from '@/lib/hooks/useToast';
-import { signInFormSchema } from '@/lib/schemas/signInFormSchema';
+import { signUpFormSchema } from '@/lib/schemas/signUpFormSchema';
 
-import Button from '@/components/design/atoms/Button';
-import Input from '@/components/design/atoms/Input';
 import { NoLayout } from '@/components/layout/NoLayout';
 
 import Logo from '~/svg/logo.svg';
@@ -20,51 +17,75 @@ import Logo from '~/svg/logo.svg';
 type Inputs = {
   email: string;
   password: string;
+  passwordConfirmation: string;
 };
 
-interface ISignIn {
-  csrfToken: string;
-}
-
-export default function SignIn({ csrfToken }: ISignIn) {
+export default function SignUp() {
+  const toast = useToast();
   const router = useRouter();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const toast: any = useToast();
-  const [loading, setLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(signInFormSchema),
+  const signUpForm = useFormSchema({
+    textButton: 'Crear una cuenta',
+    schema: signUpFormSchema,
+    formFields: [
+      {
+        name: 'email',
+        label: 'Correo electrónico',
+        type: 'email',
+        colClasses: 'col-span-6',
+      },
+      {
+        name: 'password',
+        label: 'Contraseña',
+        type: 'password',
+        colClasses: 'col-span-6',
+        inputClasses: 'col-span-6',
+      },
+      {
+        name: 'passwordConfirmation',
+        label: 'Confirmar contraseña',
+        type: 'password',
+        colClasses: 'col-span-6',
+        inputClasses: 'col-span-6',
+      },
+    ],
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit: any = async ({ email, password }: Inputs) => {
-    setLoading(true);
-    await signIn('credentials', {
-      email,
-      password,
-      callbackUrl: '/',
-      redirect: false,
+  const handleSubmit = async ({ email, password }: Inputs) => {
+    return await strapiClient
+      .post('/api/auth/local/register', {
+        username: email.split('@')[0],
+        email,
+        password,
+      })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }).then(({ error, ok, url }: any) => {
-      if (ok) {
-        router.push(url);
-      } else {
+      .then(({ data }: any) => {
+        const { user } = data;
         toast({
-          message: error,
-          type: 'error',
+          message:
+            'Registro exitoso! te hemos enviado un correo de confirmación a ' +
+            user.email,
+          type: 'success',
+          time: 5000,
         });
-        setLoading(false);
-      }
-    });
+        router.push('/auth/sign-in');
+        return true;
+      })
+      .catch((error: { response: { status: number } }) => {
+        const status = error.response.status;
+        if (status === 400 || status === 405) {
+          toast({
+            message: 'El correo electrónico ya está registrado.',
+            type: 'error',
+          });
+        }
+        return false;
+      });
   };
 
   return (
     <NoLayout
       bgWhite
-      title={`${BUSINESS_NAME} - Iniciar sesión`}
+      title={`${BUSINESS_NAME} - Crear una cuenta`}
       description='Ofrece y reserva servicios de todo tipo en muy poco tiempo para tener un control óptimo de tu agenda.'
     >
       <div className='flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8'>
@@ -74,80 +95,21 @@ export default function SignIn({ csrfToken }: ISignIn) {
           </div>
 
           <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
-            Iniciar sesión
+            Crear una cuenta
           </h2>
           <p className='mt-2 text-center text-sm text-gray-600'>
-            No tienes una cuenta?{' '}
+            ¿Ya tienes una cuenta?{' '}
             <Link
-              href='/registration'
+              href='/auth/sign-in'
               className='font-medium text-violet-600 hover:text-violet-500'
             >
-              Regístrate
+              Inicia sesión
             </Link>
           </p>
         </div>
         <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
           <div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
-            <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
-              <input name='csrfToken' type='hidden' defaultValue={csrfToken} />
-              <div>
-                <Input
-                  label='Email'
-                  type='text'
-                  className='capitalizeasds px-5 sm:text-left'
-                  errors={errors}
-                  {...register('email')}
-                />
-              </div>
-
-              <div>
-                <Input
-                  label='Contraseña'
-                  type='password'
-                  className='capitalizeasds px-5 sm:text-left'
-                  errors={errors}
-                  {...register('password')}
-                />
-              </div>
-
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center'>
-                  <input
-                    id='remember-me'
-                    name='remember-me'
-                    type='checkbox'
-                    className='h-4 w-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500'
-                  />
-                  <label
-                    htmlFor='remember-me'
-                    className='ml-2 block text-sm text-gray-900'
-                  >
-                    Recuérdame
-                  </label>
-                </div>
-
-                <div className='text-sm'>
-                  <a
-                    href='#'
-                    className='font-medium text-violet-600 hover:text-violet-500'
-                  >
-                    ¿Olvidaste tu contraseña?
-                  </a>
-                </div>
-              </div>
-
-              <div>
-                <Button
-                  type='submit'
-                  // loading={loading}
-                  disabled={loading}
-                  className='flex w-full justify-center'
-                >
-                  {loading ? 'Cargando...' : 'Iniciar sesión'}
-                </Button>
-              </div>
-            </form>
-
+            {signUpForm.form({ onSubmit: handleSubmit })}
             <div className='mt-6'>
               <div className='relative'>
                 <div className='absolute inset-0 flex items-center'>
@@ -155,7 +117,7 @@ export default function SignIn({ csrfToken }: ISignIn) {
                 </div>
                 <div className='relative flex justify-center text-sm'>
                   <span className='bg-white px-2 text-gray-500'>
-                    O inicia sesión con
+                    ó utiliza una cuenta de
                   </span>
                 </div>
               </div>

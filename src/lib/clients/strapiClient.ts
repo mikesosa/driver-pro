@@ -1,7 +1,7 @@
 import ApiClientSingleton from '@/lib/apiSingleton';
 
 const strapiClient = ApiClientSingleton.getApiInstance(
-  process.env.DRIVER_PRO_API_URL,
+  process.env.NEXT_PUBLIC_DRIVER_PRO_API_URL,
   'application/json'
 );
 

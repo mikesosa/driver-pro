@@ -42,7 +42,11 @@ export const authOptions = {
             jwt,
           };
         } catch (error: any) {
-          throw new Error('Credenciales inválidas');
+          if (error?.response?.status === 400) {
+            throw new Error('Usuario o contraseña incorrectos');
+          } else {
+            throw new Error('Error inesperado');
+          }
         }
       },
     }),

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 export interface IToast {
   message: string;
   type: 'success' | 'error' | 'info';
+  time?: number;
 }
 
 const Toast = ({ type = 'info', message }: IToast) => {
