@@ -99,6 +99,16 @@ export default function SignIn({ csrfToken }: ISignIn) {
         <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
           <div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
             {loginForm.form({ csrfToken, onSubmit: handleSubmit })}
+            <div className='mt-4 flex items-center justify-center'>
+              <div className='text-sm'>
+                <Link
+                  href='/auth/forgot-password'
+                  className='font-medium text-indigo-600 hover:text-indigo-500'
+                >
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
+            </div>
             <div className='mt-6'>
               <div className='relative'>
                 <div className='absolute inset-0 flex items-center'>
